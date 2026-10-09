@@ -1,14 +1,14 @@
-FlightPath — Flight Itinerary Planning & Optimization System
+# FlightPath — Flight Itinerary Planning & Optimization System
 
-About the Project
+About the Project -
 
-FlightPath is a C++17-based Flight Itinerary Planning and Optimization System that helps passengers find suitable flight routes between two airports based on their preferences.
+FlightPath is a C++ based Flight Itinerary Planning and Optimization System that helps passengers find suitable flight routes between two airports based on their preferences.
 
 Users can select a source airport, destination airport, and optimization preference such as cheapest route, fastest route, fewest stops, or a balanced option. The system recommends a suitable itinerary using object-oriented programming concepts and graph-based route searching.
 
 The project also simulates flight cancellations and searches for alternative itineraries when the original route becomes unavailable.
-
-Objectives
+ 
+## Objectives
 
 - Find suitable flight itineraries between airports.
 - Compare routes based on cost, duration, and number of stops.
@@ -17,7 +17,7 @@ Objectives
 - Handle flight cancellations and find alternative routes.
 - Practice collaborative development using Git and GitHub.
 
-Key Features
+## Key Features
 
 - Route Search: Find possible itineraries between source and destination airports.
 - Cheapest Route: Recommend an itinerary based on ticket cost.
@@ -28,7 +28,7 @@ Key Features
 - Itinerary Details: Display the route, total cost, duration, and number of stops.
 - File Handling: Load flight information from a local data file.
 
-OOP Concepts Used
+## OOP Concepts Used
 
 - Encapsulation: Keep class data private and provide controlled access through public methods.
 - Abstraction: Define a common interface for route optimization strategies.
@@ -37,12 +37,12 @@ OOP Concepts Used
 - Composition: An itinerary contains multiple flights.
 - Association: Flights connect source and destination airports.
 
-Design Patterns
+## Design Patterns
 
 - Strategy Pattern: Supports different route optimization preferences, such as cheapest, fastest, and fewest stops.
-- Factory Pattern (optional): Creates the appropriate optimization strategy based on the user's selection.
+- Factory Pattern : Creates the appropriate optimization strategy based on the user's selection.
 
-Technology Stack
+## Technology Stack
 
 - Language: C++17
 - Concepts: OOP, STL, graph representation, file handling, exception handling
@@ -50,7 +50,7 @@ Technology Stack
 - Development Environment: Visual Studio Code
 - Version Control: Git and GitHub
 
-How It Works
+## How It Works
 
 1. The user enters the source and destination airports.
 2. The user selects a route optimization preference.
@@ -62,4 +62,4 @@ How It Works
 
 ---
 
-FlightPath — Find a route that fits your journey.
+
