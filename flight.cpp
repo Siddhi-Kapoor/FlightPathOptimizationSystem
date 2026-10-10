@@ -1,36 +1,56 @@
+
+#include "flight.h"
 #include <iostream>
-#include "Flight.h"
-using namespace std;
+#include <stdexcept>
 
-Flight::Flight(string number, string source, string destination,
-               double price, double time) {
-    flightNumber = number;
-    sourceCode = source;
-    destinationCode = destination;
-    ticketPrice = price;
-    duration = time;
+Flight::Flight(std::string number,
+               std::string source,
+               std::string destination,
+               double price,
+               double time)
+    : flightNumber(number),
+      sourceCode(source),
+      destinationCode(destination),
+      ticketPrice(price),
+      duration(time)
+{
+    if (price < 0 || time < 0) {
+        throw std::invalid_argument(
+            "Ticket price and duration cannot be negative."
+        );
+    }
 }
 
-void Flight::display() {
-    cout << "Flight Number: " << flightNumber << endl;
-    cout << "Source: " << sourceCode << endl;
-    cout << "Destination: " << destinationCode << endl;
-    cout << "Ticket Price: Rs. " << ticketPrice << endl;
-    cout << "Duration: " << duration << " hours" << endl;
+void Flight::display()
+{
+    std::cout << "Flight Number: " << flightNumber << '\n';
+    std::cout << "Source: " << sourceCode << '\n';
+    std::cout << "Destination: " << destinationCode << '\n';
+    std::cout << "Ticket Price: " << ticketPrice << '\n';
+    std::cout << "Duration: " << duration << " hours\n";
 }
 
-double Flight::getTicketPrice() {
+double Flight::getTicketPrice()
+{
     return ticketPrice;
 }
 
-double Flight::getDuration() {
+double Flight::getDuration()
+{
     return duration;
 }
 
-string Flight::getSourceCode() {
+std::string Flight::getSourceCode()
+{
     return sourceCode;
 }
 
-string Flight::getDestinationCode() {
+std::string Flight::getDestinationCode()
+{
     return destinationCode;
+}
+
+std::string Flight::getFlightNumber()
+{
+    return flightNumber;
 }
