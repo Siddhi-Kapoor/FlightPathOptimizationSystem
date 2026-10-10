@@ -2,25 +2,29 @@
 #define FLIGHT_H
 
 #include <string>
-using namespace std;
 
 class Flight {
 private:
-    string flightNumber;
-    string sourceCode;
-    string destinationCode;
+    std::string flightNumber;
+    std::string sourceCode;
+    std::string destinationCode;
     double ticketPrice;
     double duration;
 
 public:
-    Flight(string number, string source, string destination,
-           double price, double time);
+    Flight(std::string number,
+           std::string source,
+           std::string destination,
+           double price,
+           double time);
 
     void display();
+
     double getTicketPrice();
     double getDuration();
-    string getSourceCode();
-    string getDestinationCode();
+    std::string getSourceCode();
+    std::string getDestinationCode();
+    std::string getFlightNumber();
 };
 
 #endif
