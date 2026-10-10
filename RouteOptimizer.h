@@ -1,18 +1,24 @@
-
 #ifndef ROUTEOPTIMIZER_H
 #define ROUTEOPTIMIZER_H
 
 #include <vector>
 #include "Flight.h"
-#include "Itinerary.h"
-using namespace std;
+#include "Airport.h"
 
 class RouteOptimizer {
 private:
-    vector<Flight> availableFlights;
+    std::vector<Flight> availableFlights;
 
 public:
-    void addFlight(Flight flight);
-    void findCheapestDirectFlight(string source,
-                                  string destination);
+    RouteOptimizer();
+
+    void addFlight(const Flight& flight);
+
+    Flight* findDirectFlight(const Airport& source,
+                             const Airport& destination);
+
+    bool hasDirectFlight(const Airport& source,
+                         const Airport& destination);
 };
+
+#endif
