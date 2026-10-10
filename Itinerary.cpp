@@ -1,40 +1,47 @@
+
 #include <iostream>
 #include "Itinerary.h"
-using namespace std;
 
 void Itinerary::addFlight(Flight flight) {
     flights.push_back(flight);
 }
 
 double Itinerary::getTotalPrice() {
-    double total = 0;
+    double total = 0.0;
 
-    for (int i = 0; i < flights.size(); i++) {
-        total += flights[i].getTicketPrice();
+    for (Flight flight : flights) {
+        total += flight.getTicketPrice();
     }
 
     return total;
 }
 
 double Itinerary::getTotalDuration() {
-    double total = 0;
+    double total = 0.0;
 
-    for (int i = 0; i < flights.size(); i++) {
-        total += flights[i].getDuration();
+    for (Flight flight : flights) {
+        total += flight.getDuration();
     }
 
     return total;
 }
 
 void Itinerary::display() {
-    cout << "\n--- Your Itinerary ---" << endl;
+    std::cout << "\n===== Flight Itinerary =====\n";
 
-    for (int i = 0; i < flights.size(); i++) {
-        flights[i].display();
-        cout << endl;
+    if (flights.empty()) {
+        std::cout << "No flights in the itinerary.\n";
     }
 
-    cout << "Total Price: Rs. " << getTotalPrice() << endl;
-    cout << "Total Duration: " << getTotalDuration()
-         << " hours" << endl;
+    for (std::size_t i = 0; i < flights.size(); i++) {
+        std::cout << "\nFlight " << i + 1 << ":\n";
+        flights[i].display();
+    }
+
+    std::cout << "\nTotal Ticket Price: Rs. "
+              << getTotalPrice() << '\n';
+
+    std::cout << "Total Flight Duration: "
+              << getTotalDuration() << " hours\n";
 }
+
