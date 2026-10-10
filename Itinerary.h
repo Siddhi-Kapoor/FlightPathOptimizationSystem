@@ -1,13 +1,13 @@
+
 #ifndef ITINERARY_H
 #define ITINERARY_H
 
 #include <vector>
 #include "Flight.h"
-using namespace std;
 
 class Itinerary {
 private:
-    vector<Flight> flights;
+    std::vector<Flight> flights;
 
 public:
     void addFlight(Flight flight);
@@ -17,3 +17,4 @@ public:
 };
 
 #endif
+
