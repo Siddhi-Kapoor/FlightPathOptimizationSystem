@@ -1,3 +1,6 @@
+#ifndef AIRPORT_H
+#define AIRPORT_H
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -9,26 +12,9 @@ private:
     string city;
 
 public:
-    Airport(string c, string n, string ct) {
-        code = c;
-        name = n;
-        city = ct;
-    }
-
-    void display() {
-        cout << "Airport: " << name << endl;
-        cout << "Code: " << code << endl;
-        cout << "City: " << city << endl;
-    }
+    Airport(string c, string n, string ct);
+    void display();
+    string getCode();
 };
 
-int main() {
-    Airport a1("HYD", "Rajiv Gandhi Airport", "Hyderabad");
-    Airport a2("MAA", "Chennai International Airport", "Chennai");
-
-    a1.display();
-    cout << endl;
-    a2.display();
-
-    return 0;
-}
+#endif
