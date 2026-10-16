@@ -1,46 +1,49 @@
 #include "flight.h"
 #include <stdexcept>
-#include <cctype>
+#include <stdexcept>
 
-Flight::Flight(string number, string src, string dest,
-               double dur, double price)
+ using namespace std;
+//constructor
+Flight::Flight(string number, string source, string destination,
+               double time, double price)
     : flightNumber(number),
-      source(src),
-      destination(dest),
-      duration(dur),
-      fare(price) {
+      sourceCode(source),
+      destinationCode(destination),
+      duration(time),
+      ticketPrice(price) {
 
-    if (!isValid()) {
-        throw invalid_argument("Invalid flight details");
+  if (ticketPrice < 0 || duration < 0) {
+        throw invalid_argument(
+            "Ticket price and duration cannot be negative."
+        );
     }
 }
-
-string Flight::getFlightNumber() const {
-    return flightNumber;
+// Display all flight details
+void Flight::display() {
+    cout << "Flight Number: " << flightNumber << endl;
+    cout << "Source: " << sourceCode << endl;
+    cout << "Destination: " << destinationCode << endl;
+    cout << "Ticket Price: " << ticketPrice << endl;
+    cout << "Duration: " << duration << " hours" << endl;
 }
 
-string Flight::getSource() const {
-    return source;
+// Getters
+double Flight::getTicketPrice() {
+    return ticketPrice;
 }
 
-string Flight::getDestination() const {
-    return destination;
-}
-
-double Flight::getDuration() const {
+double Flight::getDuration() {
     return duration;
 }
 
-double Flight::getFare() const {
-    return fare;
+string Flight::getSourceCode() {
+    return sourceCode;
 }
 
-bool Flight::isValid() const {
-    return !flightNumber.empty()
-        && !source.empty()
-        && !destination.empty()
-        && source != destination
-        && duration >= 0
-        && fare >= 0;
+string Flight::getDestinationCode() {
+    return destinationCode;
 }
 
+string Flight::getFlightNumber() {
+    return flightNumber;
+}
