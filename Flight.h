@@ -27,7 +27,7 @@ public:
     std::string getDestinationCode() const;
     std::string getFlightNumber() const;
     bool isCancelled() const;
-    void cancel() ;
+    void cancel();
 };
 
 #endif
