@@ -1,0 +1,35 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Build FlightPath",
+            "command": "C:\\MinGW\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-std=c++17",
+                "${workspaceFolder}\\main.cpp",
+                "${workspaceFolder}\\Airport.cpp",
+                "${workspaceFolder}\\Flight.cpp",
+                "${workspaceFolder}\\Itinerary.cpp",
+                "${workspaceFolder}\\RouteOptimizer.cpp",
+                "${workspaceFolder}\\RouteStrategy.cpp",
+                "${workspaceFolder}\\Passenger.cpp",
+                "-o",
+                "${workspaceFolder}\\FlightPath.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build the complete FlightPath console application."
+        }
+    ],
+    "version": "2.0.0"
+}
