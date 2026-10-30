@@ -1,5 +1,9 @@
 *.o
+<<<<<<< HEAD
 airport_test
 *.exe
 
 *.exe
+=======
+airport_test
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e

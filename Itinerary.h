@@ -2,7 +2,10 @@
 #ifndef ITINERARY_H
 #define ITINERARY_H
 
+<<<<<<< HEAD
 #include <cstddef>
+=======
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
 #include <vector>
 #include "Flight.h"
 
@@ -11,6 +14,7 @@ private:
     std::vector<Flight> flights;
 
 public:
+<<<<<<< HEAD
     void addFlight(const Flight& flight);
     void clear();
     double getTotalPrice() const;
@@ -21,3 +25,13 @@ public:
 };
 
 #endif
+=======
+    void addFlight(Flight flight);
+    double getTotalPrice();
+    double getTotalDuration();
+    void display();
+};
+
+#endif
+
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e

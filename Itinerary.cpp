@@ -1,4 +1,5 @@
 #include <iostream>
+<<<<<<< HEAD
 #include <iomanip>
 #include "Itinerary.h"
 
@@ -61,4 +62,54 @@ void Itinerary::display() const {
         std::cout << ' ' << flight.getFlightNumber();
     }
     std::cout << '\n';
+=======
+#include "Itinerary.h"
+
+void Itinerary::addFlight(Flight flight) {
+flights.push_back(flight);
+}
+
+double Itinerary::getTotalPrice() {
+double total = 0.0;
+
+for (const Flight& flight : flights) {
+    total += flight.getTicketPrice();
+}
+
+return total;
+
+}
+
+double Itinerary::getTotalDuration() {
+double total = 0.0;
+
+for (const Flight& flight : flights) {
+    total += flight.getDuration();
+}
+
+return total;
+
+}
+
+void Itinerary::display() {
+std::cout << "\nFlight Itinerary:\n";
+
+if (flights.empty()) {
+    std::cout << "No flights in the itinerary.\n";
+} else {
+    for (const Flight& flight : flights) {
+        std::cout << flight.getSourceCode()
+                  << " -> "
+                  << flight.getDestinationCode()
+                  << '\n';
+    }
+}
+
+std::cout << "\nTotal Duration: "
+          << getTotalDuration() << " hours\n";
+
+std::cout << "Total Fare: Rs. "
+          << getTotalPrice() << '\n';
+
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
 }

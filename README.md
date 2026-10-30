@@ -26,6 +26,10 @@ The project also simulates flight cancellations and searches for alternative iti
 - Balanced Optimization: Consider cost, duration, and stops together.
 - Flight Disruption Simulation: Simulate a flight cancellation and search for an alternative itinerary.
 - Itinerary Details: Display the route, total cost, duration, and number of stops.
+<<<<<<< HEAD
+=======
+- File Handling: Load flight information from a local data file.
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
 
 ## OOP Concepts Used
 
@@ -35,8 +39,11 @@ The project also simulates flight cancellations and searches for alternative iti
 - Polymorphism: Select and execute different optimization strategies through a base-class interface.
 - Composition: An itinerary contains multiple flights.
 - Association: Flights connect source and destination airports.
+<<<<<<< HEAD
 - Domain classes: `Airport`, `Flight`, `Passenger`, `Itinerary`, and
   `FlightNetwork` represent the core project entities.
+=======
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
 
 ## Design Patterns
 
@@ -46,11 +53,16 @@ The project also simulates flight cancellations and searches for alternative iti
 ## Technology Stack
 
 - Language: C++17
+<<<<<<< HEAD
 - Concepts: OOP, STL, graph representation, exception handling
+=======
+- Concepts: OOP, STL, graph representation, file handling, exception handling
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
 - Algorithm: Dijkstra's algorithm for route searching
 - Development Environment: Visual Studio Code
 - Version Control: Git and GitHub
 
+<<<<<<< HEAD
 ## Build and Run
 
 The VS Code **Build FlightPath** task compiles the complete application with
@@ -81,6 +93,9 @@ Dijkstra's algorithm with the selected strategy's non-negative edge weight,
 and cancelled flights are excluded from subsequent searches.
 
 ## How the Demo Works
+=======
+## How It Works
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
 
 1. The user enters the source and destination airports.
 2. The user selects a route optimization preference.
@@ -91,3 +106,8 @@ and cancelled flights are excluded from subsequent searches.
 
 
 ---
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e

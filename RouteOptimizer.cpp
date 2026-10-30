@@ -1,6 +1,7 @@
 
 #include "RouteOptimizer.h"
 
+<<<<<<< HEAD
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -22,6 +23,29 @@ Flight* FlightNetwork::findDirectFlight(
     {
         if (!flight.isCancelled() &&
             flight.getSourceCode() == source &&
+=======
+#include <queue>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+
+RouteOptimizer::RouteOptimizer()
+{
+}
+
+void RouteOptimizer::addFlight(const Flight& flight)
+{
+    availableFlights.push_back(flight);
+}
+
+Flight* RouteOptimizer::findDirectFlight(
+    const std::string& source,
+    const std::string& destination)
+{
+    for (Flight& flight : availableFlights)
+    {
+        if (flight.getSourceCode() == source &&
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
             flight.getDestinationCode() == destination)
         {
             return &flight;
@@ -31,6 +55,7 @@ Flight* FlightNetwork::findDirectFlight(
     return nullptr;
 }
 
+<<<<<<< HEAD
 bool FlightNetwork::hasDirectFlight(
     const std::string& source,
     const std::string& destination) {
@@ -133,12 +158,112 @@ bool FlightNetwork::findRoute(
 
     std::reverse(route.begin(), route.end());
     for (std::size_t index : route) {
+=======
+bool RouteOptimizer::hasDirectFlight(
+    const std::string& source,
+    const std::string& destination)
+{
+    return findDirectFlight(source, destination) != nullptr;
+}
+
+bool RouteOptimizer::findRoute(
+    const std::string& source,
+    const std::string& destination,
+    Itinerary& itinerary)
+{
+    if (source == destination)
+    {
+        return true;
+    }
+
+    std::queue<std::string> pending;
+    std::unordered_set<std::string> visited;
+
+    // For each reached airport, store the previous airport
+    // and the flight used to reach it.
+    std::unordered_map<std::string, std::string> previousAirport;
+    std::unordered_map<std::string, int> previousFlight;
+
+    pending.push(source);
+    visited.insert(source);
+
+    bool found = false;
+
+    while (!pending.empty())
+    {
+        std::string current = pending.front();
+        pending.pop();
+
+        for (int i = 0;
+             i < static_cast<int>(availableFlights.size());
+             ++i)
+        {
+            const Flight& flight = availableFlights[i];
+
+            if (flight.getSourceCode() != current)
+            {
+                continue;
+            }
+
+            std::string next = flight.getDestinationCode();
+
+            if (visited.count(next))
+            {
+                continue;
+            }
+
+            visited.insert(next);
+            previousAirport[next] = current;
+            previousFlight[next] = i;
+
+            if (next == destination)
+            {
+                found = true;
+                break;
+            }
+
+            pending.push(next);
+        }
+
+        if (found)
+        {
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        return false;
+    }
+
+    // Reconstruct the route from destination to source.
+    std::vector<int> route;
+
+    std::string current = destination;
+
+    while (current != source)
+    {
+        int flightIndex = previousFlight[current];
+        route.push_back(flightIndex);
+        current = previousAirport[current];
+    }
+
+    // Reverse so flights appear in travel order.
+    std::reverse(route.begin(), route.end());
+
+    // Add the selected flights to the itinerary.
+    for (int index : route)
+    {
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
         itinerary.addFlight(availableFlights[index]);
     }
 
     return true;
 }
+<<<<<<< HEAD
 
 const std::vector<Flight>& FlightNetwork::getFlights() const {
     return availableFlights;
 }
+=======
+>>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
