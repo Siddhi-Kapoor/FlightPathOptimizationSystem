@@ -1,18 +1,18 @@
 #include "flight.h"
-#include <stdexcept>
+#include <iostream>
 #include <stdexcept>
 
  using namespace std;
 //constructor
 Flight::Flight(string number, string source, string destination,
-               double time, double price)
+               double price, double time)
     : flightNumber(number),
       sourceCode(source),
       destinationCode(destination),
-      duration(time),
-      ticketPrice(price) {
+      ticketPrice(price),
+      duration(time) {
 
-  if (ticketPrice < 0 || duration < 0) {
+    if (ticketPrice < 0 || duration < 0) {
         throw invalid_argument(
             "Ticket price and duration cannot be negative."
         );
