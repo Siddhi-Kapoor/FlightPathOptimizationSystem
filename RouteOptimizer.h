@@ -6,23 +6,15 @@
 #include <string>
 #include "Flight.h"
 #include "Itinerary.h"
-<<<<<<< HEAD
 #include "RouteStrategy.h"
 
-class FlightNetwork {
-=======
-
-class RouteOptimizer {
->>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
+class RouteOptimizer
+{
 private:
     std::vector<Flight> availableFlights;
 
 public:
-<<<<<<< HEAD
-    FlightNetwork();
-=======
     RouteOptimizer();
->>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
 
     void addFlight(const Flight& flight);
 
@@ -34,11 +26,11 @@ public:
     bool hasDirectFlight(
         const std::string& source,
         const std::string& destination
-    );
+    ) const;
 
-<<<<<<< HEAD
     bool cancelFlight(const std::string& flightNumber);
 
+    // Strategy-based route optimization
     bool findRoute(
         const std::string& source,
         const std::string& destination,
@@ -46,20 +38,14 @@ public:
         Itinerary& itinerary
     ) const;
 
-    const std::vector<Flight>& getFlights() const;
-};
-
-typedef FlightNetwork RouteOptimizer;
-
-=======
-    // Finds a route using direct or connecting flights.
-    // Returns false if no route exists.
+    // Default route search: fewest stops
     bool findRoute(
         const std::string& source,
         const std::string& destination,
         Itinerary& itinerary
-    );
+    ) const;
+
+    const std::vector<Flight>& getFlights() const;
 };
 
->>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
 #endif
