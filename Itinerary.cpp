@@ -1,5 +1,5 @@
+
 #include <iostream>
-<<<<<<< HEAD
 #include <iomanip>
 #include "Itinerary.h"
 
@@ -40,76 +40,38 @@ const std::vector<Flight>& Itinerary::getFlights() const {
 }
 
 void Itinerary::display() const {
+    std::cout << "\nFlight Itinerary:\n";
+
     if (flights.empty()) {
         std::cout << "No flights in the itinerary.\n";
-        return;
-    }
+    } else {
+        std::cout << "Route: " << flights.front().getSourceCode();
 
-    std::cout << "\nRoute: " << flights.front().getSourceCode();
-    for (const Flight& flight : flights) {
-        std::cout << " -> " << flight.getDestinationCode();
+        for (const Flight& flight : flights) {
+            std::cout << " -> " << flight.getDestinationCode();
+        }
+
+        std::cout << "\nFlights:";
+
+        for (const Flight& flight : flights) {
+            std::cout << ' ' << flight.getFlightNumber();
+        }
+
+        std::cout << '\n';
     }
 
     const double duration = getTotalDuration();
-    const int totalMinutes = static_cast<int>(duration * 60.0 + 0.5);
-    std::cout << "\nCost: Rs. " << std::fixed << std::setprecision(0)
-              << getTotalPrice()
-              << " | Time: " << totalMinutes / 60 << "h "
-              << totalMinutes % 60 << "m"
-              << " | Stops: " << getStops() << '\n'
-              << "Flights:";
-    for (const Flight& flight : flights) {
-        std::cout << ' ' << flight.getFlightNumber();
-    }
-    std::cout << '\n';
-=======
-#include "Itinerary.h"
+    const int totalMinutes =
+        static_cast<int>(duration * 60.0 + 0.5);
 
-void Itinerary::addFlight(Flight flight) {
-flights.push_back(flight);
+    std::cout << "Total Fare: Rs. "
+              << std::fixed << std::setprecision(2)
+              << getTotalPrice() << '\n';
+
+    std::cout << "Total Duration: "
+              << totalMinutes / 60 << "h "
+              << totalMinutes % 60 << "m\n";
+
+    std::cout << "Total Stops: " << getStops() << '\n';
 }
 
-double Itinerary::getTotalPrice() {
-double total = 0.0;
-
-for (const Flight& flight : flights) {
-    total += flight.getTicketPrice();
-}
-
-return total;
-
-}
-
-double Itinerary::getTotalDuration() {
-double total = 0.0;
-
-for (const Flight& flight : flights) {
-    total += flight.getDuration();
-}
-
-return total;
-
-}
-
-void Itinerary::display() {
-std::cout << "\nFlight Itinerary:\n";
-
-if (flights.empty()) {
-    std::cout << "No flights in the itinerary.\n";
-} else {
-    for (const Flight& flight : flights) {
-        std::cout << flight.getSourceCode()
-                  << " -> "
-                  << flight.getDestinationCode()
-                  << '\n';
-    }
-}
-
-std::cout << "\nTotal Duration: "
-          << getTotalDuration() << " hours\n";
-
-std::cout << "Total Fare: Rs. "
-          << getTotalPrice() << '\n';
-
->>>>>>> c9f580d44513af20c55948b9716a7c0b7764bc7e
-}
