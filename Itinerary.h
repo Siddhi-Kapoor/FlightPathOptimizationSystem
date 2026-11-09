@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <vector>
-#include "flight.h"
+#include "Flight.h"
 
 class Itinerary {
 private:

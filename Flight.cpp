@@ -1,4 +1,4 @@
-#include "flight.h"
+#include "Flight.h"
 #include <iostream>
 #include <cmath>
 #include <stdexcept>

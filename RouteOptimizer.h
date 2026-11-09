@@ -5,7 +5,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "flight.h"
+#include "Flight.h"
 #include "Itinerary.h"
 
 enum class RoutePreference {
