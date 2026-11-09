@@ -2,19 +2,22 @@
 #ifndef ITINERARY_H
 #define ITINERARY_H
 
+#include <iostream>
 #include <vector>
-#include "Flight.h"
+#include "flight.h"
 
 class Itinerary {
 private:
     std::vector<Flight> flights;
 
 public:
-    void addFlight(Flight flight);
-    double getTotalPrice();
-    double getTotalDuration();
-    void display();
+    void addFlight(const Flight& flight);
+    void clear();
+    double getTotalPrice() const;
+    double getTotalDuration() const;
+    std::size_t getNumberOfStops() const;
+    const std::vector<Flight>& getFlights() const;
+    void display(std::ostream& output = std::cout) const;
 };
 
 #endif
-

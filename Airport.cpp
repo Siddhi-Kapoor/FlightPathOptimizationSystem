@@ -1,18 +1,27 @@
 #include <iostream>
+#include <stdexcept>
+#include <utility>
 #include "Airport.h"
-using namespace std;
 
-Airport::Airport(string c, string n, string ct) {
-    code = c;
-    name = n;
-    city = ct;
-}
-void Airport::display() {
-    cout << "Airport Code: " << code << endl;
-    cout << "Airport Name: " << name << endl;
-    cout << "City: " << city << endl;
+Airport::Airport(std::string code, std::string name, std::string city)
+    : code(std::move(code)), name(std::move(name)), city(std::move(city)) {
+    if (this->code.empty() || this->name.empty() || this->city.empty()) {
+        throw std::invalid_argument("Airport code, name, and city are required.");
+    }
 }
 
-string Airport::getCode() {
+void Airport::display(std::ostream& output) const {
+    output << code << " - " << name << " (" << city << ")\n";
+}
+
+const std::string& Airport::getCode() const {
     return code;
+}
+
+const std::string& Airport::getName() const {
+    return name;
+}
+
+const std::string& Airport::getCity() const {
+    return city;
 }

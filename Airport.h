@@ -3,18 +3,19 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Airport {
 private:
-    string code;
-    string name;
-    string city;
+    std::string code;
+    std::string name;
+    std::string city;
 
 public:
-    Airport(string c, string n, string ct);
-    void display();
-    string getCode();
+    Airport(std::string code, std::string name, std::string city);
+    void display(std::ostream& output = std::cout) const;
+    const std::string& getCode() const;
+    const std::string& getName() const;
+    const std::string& getCity() const;
 };
 
 #endif

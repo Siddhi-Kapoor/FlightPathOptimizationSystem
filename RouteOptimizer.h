@@ -2,37 +2,79 @@
 #ifndef ROUTEOPTIMIZER_H
 #define ROUTEOPTIMIZER_H
 
-#include <vector>
+#include <memory>
 #include <string>
-#include "Flight.h"
+#include <vector>
+#include "flight.h"
 #include "Itinerary.h"
+
+enum class RoutePreference {
+    Cheapest,
+    Fastest,
+    FewestStops,
+    Balanced
+};
+
+class RouteOptimizationStrategy {
+public:
+    virtual ~RouteOptimizationStrategy() = default;
+    virtual double edgeWeight(const Flight& flight,
+                              double maximumPrice,
+                              double maximumDuration) const = 0;
+    virtual std::string name() const = 0;
+};
+
+class CheapestRouteStrategy final : public RouteOptimizationStrategy {
+public:
+    double edgeWeight(const Flight& flight, double, double) const override;
+    std::string name() const override;
+};
+
+class FastestRouteStrategy final : public RouteOptimizationStrategy {
+public:
+    double edgeWeight(const Flight& flight, double, double) const override;
+    std::string name() const override;
+};
+
+class FewestStopsStrategy final : public RouteOptimizationStrategy {
+public:
+    double edgeWeight(const Flight& flight, double, double) const override;
+    std::string name() const override;
+};
+
+class BalancedRouteStrategy final : public RouteOptimizationStrategy {
+public:
+    double edgeWeight(const Flight& flight,
+                      double maximumPrice,
+                      double maximumDuration) const override;
+    std::string name() const override;
+};
+
+std::unique_ptr<RouteOptimizationStrategy> createRouteStrategy(
+    RoutePreference preference);
 
 class RouteOptimizer {
 private:
     std::vector<Flight> availableFlights;
+    std::vector<std::string> cancelledFlightNumbers;
 
 public:
-    RouteOptimizer();
-
     void addFlight(const Flight& flight);
-
-    Flight* findDirectFlight(
+    bool cancelFlight(const std::string& flightNumber);
+    bool isCancelled(const std::string& flightNumber) const;
+    const std::vector<Flight>& getFlights() const;
+    std::vector<std::string> getAirportCodes() const;
+    const Flight* findDirectFlight(
         const std::string& source,
-        const std::string& destination
-    );
-
+        const std::string& destination) const;
     bool hasDirectFlight(
         const std::string& source,
-        const std::string& destination
-    );
-
-    // Finds a route using direct or connecting flights.
-    // Returns false if no route exists.
+        const std::string& destination) const;
     bool findRoute(
         const std::string& source,
         const std::string& destination,
-        Itinerary& itinerary
-    );
+        const RouteOptimizationStrategy& strategy,
+        Itinerary& itinerary) const;
 };
 
 #endif
