@@ -7,6 +7,7 @@
 #include <vector>
 #include "Flight.h"
 #include "Itinerary.h"
+#include "RouteStrategy.h"
 
 enum class RoutePreference {
     Cheapest,

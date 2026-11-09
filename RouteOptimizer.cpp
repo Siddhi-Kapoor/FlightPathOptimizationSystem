@@ -1,4 +1,3 @@
-
 #include "RouteOptimizer.h"
 
 #include <algorithm>
@@ -210,4 +209,27 @@ bool RouteOptimizer::findRoute(
         itinerary.addFlight(availableFlights[index]);
     }
     return true;
+}
+
+// Default search uses the fewest-stops strategy.
+
+bool RouteOptimizer::findRoute(
+    const std::string& source,
+    const std::string& destination,
+    Itinerary& itinerary) const
+{
+    FewestStopsStrategy strategy;
+
+    return findRoute(
+        source,
+        destination,
+        strategy,
+        itinerary
+    );
+}
+
+const std::vector<Flight>&
+RouteOptimizer::getFlights() const
+{
+    return availableFlights;
 }
