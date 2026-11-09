@@ -23,11 +23,11 @@ std::string FastestRouteStrategy::name() const {
     return "Fastest";
 }
 
-double FewestStopsStrategy::edgeWeight(const Flight&, double, double) const {
+double FewestStopsRouteStrategy::edgeWeight(const Flight&, double, double) const {
     return 1.0;
 }
 
-std::string FewestStopsStrategy::name() const {
+std::string FewestStopsRouteStrategy::name() const {
     return "Fewest stops";
 }
 
@@ -53,7 +53,7 @@ std::unique_ptr<RouteOptimizationStrategy> createRouteStrategy(
         case RoutePreference::Fastest:
             return std::make_unique<FastestRouteStrategy>();
         case RoutePreference::FewestStops:
-            return std::make_unique<FewestStopsStrategy>();
+            return std::make_unique<FewestStopsRouteStrategy>();
         case RoutePreference::Balanced:
             return std::make_unique<BalancedRouteStrategy>();
     }
@@ -211,25 +211,10 @@ bool RouteOptimizer::findRoute(
     return true;
 }
 
-// Default search uses the fewest-stops strategy.
-
 bool RouteOptimizer::findRoute(
     const std::string& source,
     const std::string& destination,
-    Itinerary& itinerary) const
-{
-    FewestStopsStrategy strategy;
-
-    return findRoute(
-        source,
-        destination,
-        strategy,
-        itinerary
-    );
-}
-
-const std::vector<Flight>&
-RouteOptimizer::getFlights() const
-{
-    return availableFlights;
+    Itinerary& itinerary) const {
+    const FewestStopsRouteStrategy strategy;
+    return findRoute(source, destination, strategy, itinerary);
 }

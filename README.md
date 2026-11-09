@@ -32,7 +32,7 @@ choice. Cancelled flights are excluded from later searches in the same run.
 From the project directory, with `g++` installed:
 
 ```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp Airport.cpp Flight.cpp Itinerary.cpp RouteOptimizer.cpp -o FlightPath.exe
+g++ -std=c++17 -Wall -Wextra -pedantic main.cpp Airport.cpp AirportManager.cpp Flight.cpp Itinerary.cpp Passenger.cpp RouteOptimizer.cpp RouteStrategy.cpp -o FlightPath.exe
 .\FlightPath.exe
 ```
 
@@ -61,6 +61,9 @@ FlightPathOptimizationSystem/
 ├── Flight.h/.cpp            # Flight model
 ├── Itinerary.h/.cpp        # Route details and totals
 ├── RouteOptimizer.h/.cpp   # Dijkstra and optimization strategies
+├── RouteStrategy.h/.cpp    # Shared route strategy interfaces
+├── AirportManager.h/.cpp   # Airport collection and lookup
+├── Passenger.h/.cpp        # Passenger model
 ├── data/                   # Sample airport and flight CSV files
 ├── AirportTest.cpp         # Airport model smoke test
 ├── FlightTest.cpp          # Flight model smoke test
@@ -71,6 +74,6 @@ FlightPathOptimizationSystem/
 Build and run the route optimizer checks with:
 
 ```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic RouteOptimizerTest.cpp Flight.cpp Itinerary.cpp RouteOptimizer.cpp -o RouteOptimizerTest.exe
+g++ -std=c++17 -Wall -Wextra -pedantic RouteOptimizerTest.cpp Flight.cpp Itinerary.cpp RouteOptimizer.cpp RouteStrategy.cpp -o RouteOptimizerTest.exe
 .\RouteOptimizerTest.exe
 ```

@@ -7,7 +7,6 @@
 #include <vector>
 #include "Flight.h"
 #include "Itinerary.h"
-#include "RouteStrategy.h"
 
 enum class RoutePreference {
     Cheapest,
@@ -37,7 +36,7 @@ public:
     std::string name() const override;
 };
 
-class FewestStopsStrategy final : public RouteOptimizationStrategy {
+class FewestStopsRouteStrategy final : public RouteOptimizationStrategy {
 public:
     double edgeWeight(const Flight& flight, double, double) const override;
     std::string name() const override;
@@ -75,6 +74,10 @@ public:
         const std::string& source,
         const std::string& destination,
         const RouteOptimizationStrategy& strategy,
+        Itinerary& itinerary) const;
+    bool findRoute(
+        const std::string& source,
+        const std::string& destination,
         Itinerary& itinerary) const;
 };
 

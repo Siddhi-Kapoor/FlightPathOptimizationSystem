@@ -21,7 +21,7 @@ std::string FastestStrategy::getName() const {
     return "Fastest";
 }
 
-double FewestStopsStrategy::edgeWeight(const Flight& flight) const {
+double FewestStopsStrategy::edgeWeight(const Flight&) const {
     return 1.0;
 }
 
