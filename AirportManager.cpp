@@ -2,8 +2,8 @@
 #include "AirportManager.h"
 using namespace std;
 bool AirportManager::addAirport(const Airport& airport) {
-    for (int i = 0; i < airports.size(); i++) {
-        if (airports[i].getCode() == airport.getCode()) {
+    for (const Airport& existing : airports) {
+        if (existing.getCode() == airport.getCode()) {
             cout << "Airport already exists!" << endl;
             return false;
         }
@@ -13,9 +13,9 @@ bool AirportManager::addAirport(const Airport& airport) {
     return true;
 }
 const Airport* AirportManager::findAirport(const string& code) const {
-    for (int i = 0; i < airports.size(); i++) {
-        if (airports[i].getCode() == code) {
-            return &airports[i];
+    for (const Airport& airport : airports) {
+        if (airport.getCode() == code) {
+            return &airport;
         }
     }
 
@@ -27,8 +27,8 @@ void AirportManager::displayAllAirports() const {
         return;
     }
 
-    for (int i = 0; i < airports.size(); i++) {
-        airports[i].display();
+    for (const Airport& airport : airports) {
+        airport.display();
         cout << endl;
     }
 }

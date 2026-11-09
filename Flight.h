@@ -1,6 +1,7 @@
 #ifndef FLIGHT_H
 #define FLIGHT_H
 
+#include <iostream>
 #include <string>
 
 class Flight {
@@ -10,7 +11,6 @@ private:
     std::string destinationCode;
     double ticketPrice;
     double duration;
-    bool cancelled;
 
 public:
     Flight(std::string number,
@@ -19,15 +19,13 @@ public:
            double price,
            double time);
 
-    void display() const;
+    void display(std::ostream& output = std::cout) const;
 
     double getTicketPrice() const;
     double getDuration() const;
-    std::string getSourceCode() const;
-    std::string getDestinationCode() const;
-    std::string getFlightNumber() const;
-    bool isCancelled() const;
-    void cancel();
+    const std::string& getSourceCode() const;
+    const std::string& getDestinationCode() const;
+    const std::string& getFlightNumber() const;
 };
 
 #endif

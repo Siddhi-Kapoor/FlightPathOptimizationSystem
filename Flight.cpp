@@ -1,71 +1,35 @@
 #include "Flight.h"
-
-#include <cmath>
 #include <iostream>
+#include <cmath>
 #include <stdexcept>
-#include <algorithm>
-#include <cctype>
+#include <utility>
 
-bool isBlank(const std::string& value) {
-    return value.empty() ||
-        std::all_of(value.begin(), value.end(),
-            [](unsigned char ch) {
-                return std::isspace(ch);
-            });
-}
-
-std::string toUpper(std::string value) {
-    std::transform(value.begin(), value.end(), value.begin(),
-        [](unsigned char ch) {
-            return std::toupper(ch);
-        });
-
-    return value;
-}
-
-Flight::Flight(std::string number,
-               std::string source,
-               std::string destination,
-               double price,
-               double time)
-    : flightNumber(number),
-      sourceCode(source),
-      destinationCode(destination),
+Flight::Flight(std::string number, std::string source, std::string destination,
+               double price, double time)
+    : flightNumber(std::move(number)),
+      sourceCode(std::move(source)),
+      destinationCode(std::move(destination)),
       ticketPrice(price),
-      duration(time),
-      cancelled(false)
-{
-    if (isBlank(flightNumber) ||
-        isBlank(sourceCode) ||
-        isBlank(destinationCode)) {
+      duration(time) {
+    if (flightNumber.empty() || sourceCode.empty() || destinationCode.empty()) {
         throw std::invalid_argument(
-            "Flight number and airport codes cannot be empty.");
+            "Flight number, source, and destination are required.");
     }
-
-    if (toUpper(sourceCode) == toUpper(destinationCode)) {
-        throw std::invalid_argument(
-            "Source and destination cannot be the same.");
+    if (sourceCode == destinationCode) {
+        throw std::invalid_argument("A flight must connect different airports.");
     }
-
-    if (!std::isfinite(ticketPrice) ||
-        !std::isfinite(duration) ||
-        ticketPrice < 0 ||
-        duration < 0) {
+    if (!std::isfinite(ticketPrice) || !std::isfinite(duration) ||
+        ticketPrice < 0.0 || duration <= 0.0) {
         throw std::invalid_argument(
-            "Ticket price and duration must be finite and non-negative.");
+            "Ticket price must be non-negative and duration must be positive.");
     }
 }
 
-void Flight::display() const {
-    std::cout << "\n========== FLIGHT DETAILS ==========\n"
-              << "Flight Number : " << flightNumber << '\n'
-              << "Source        : " << sourceCode << '\n'
-              << "Destination   : " << destinationCode << '\n'
-              << "Ticket Price  : Rs. " << ticketPrice << '\n'
-              << "Duration      : " << duration << " hours\n"
-              << "Status        : "
-              << (cancelled ? "Cancelled" : "Available")
-              << "\n====================================\n";
+void Flight::display(std::ostream& output) const {
+    output << "Flight: " << flightNumber
+           << "\nRoute: " << sourceCode << " -> " << destinationCode
+           << "\nTicket price: Rs. " << ticketPrice
+           << "\nDuration: " << duration << " hours\n";
 }
 
 double Flight::getTicketPrice() const {
@@ -76,22 +40,14 @@ double Flight::getDuration() const {
     return duration;
 }
 
-std::string Flight::getSourceCode() const {
+const std::string& Flight::getSourceCode() const {
     return sourceCode;
 }
 
-std::string Flight::getDestinationCode() const {
+const std::string& Flight::getDestinationCode() const {
     return destinationCode;
 }
 
-std::string Flight::getFlightNumber() const {
+const std::string& Flight::getFlightNumber() const {
     return flightNumber;
-}
-
-bool Flight::isCancelled() const {
-    return cancelled;
-}
-
-void Flight::cancel() {
-    cancelled = true;
 }
