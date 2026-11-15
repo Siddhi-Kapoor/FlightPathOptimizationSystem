@@ -14,6 +14,57 @@
 
 namespace {
 
+void printColor(const std::string& color) {
+    std::cout << color;
+}
+
+void resetColor() {
+    std::cout << "\033[0m";
+}
+
+void printHeader(const std::string& title) {
+    std::cout << "\n";
+    printColor("\033[1;36m");
+    std::cout << "========================================\n";
+    std::cout << "         " << title << "\n";
+    std::cout << "========================================\n";
+    resetColor();
+}
+
+void printDivider() {
+    printColor("\033[2;37m");
+    std::cout << "------------------------------------------------------\n";
+    resetColor();
+}
+
+void printMenu() {
+    std::cout << "\n";
+    printColor("\033[1;33m");
+    std::cout << "  [1] Find an itinerary\n";
+    std::cout << "  [2] View available flights\n";
+    std::cout << "  [3] View airports\n";
+    std::cout << "  [0] Exit\n";
+    resetColor();
+}
+
+void printSuccess(const std::string& message) {
+    printColor("\033[1;32m");
+    std::cout << "  " << message << "\n";
+    resetColor();
+}
+
+void printError(const std::string& message) {
+    printColor("\033[1;31m");
+    std::cout << "  " << message << "\n";
+    resetColor();
+}
+
+void printInfo(const std::string& message) {
+    printColor("\033[1;34m");
+    std::cout << "  " << message << "\n";
+    resetColor();
+}
+
 std::string trim(const std::string& value) {
     const std::string whitespace = " \t\r\n";
     const std::size_t first = value.find_first_not_of(whitespace);
@@ -82,8 +133,7 @@ RouteOptimizer loadFlights(const std::string& filename) {
         }
         firstRecord = false;
         if (fields.size() != 5) {
-            throw std::runtime_error("Expected 5 comma-separated fields on "
-                                     "flight data line " +
+            throw std::runtime_error("Expected 5 comma-separated fields on flight data line " +
                                      std::to_string(lineNumber) + ".");
         }
         try {
@@ -92,8 +142,7 @@ RouteOptimizer loadFlights(const std::string& filename) {
                 parseNumber(fields[3], "ticket price", lineNumber),
                 parseNumber(fields[4], "duration", lineNumber)));
         } catch (const std::exception& error) {
-            throw std::runtime_error("Flight data line " +
-                                     std::to_string(lineNumber) + ": " +
+            throw std::runtime_error("Flight data line " + std::to_string(lineNumber) + ": " +
                                      error.what());
         }
     }
@@ -125,8 +174,7 @@ std::vector<Airport> loadAirports(const std::string& filename) {
         }
         firstRecord = false;
         if (fields.size() != 3) {
-            throw std::runtime_error("Expected 3 comma-separated fields on "
-                                     "airport data line " +
+            throw std::runtime_error("Expected 3 comma-separated fields on airport data line " +
                                      std::to_string(lineNumber) + ".");
         }
         airports.emplace_back(uppercase(fields[0]), fields[1], fields[2]);
@@ -135,7 +183,11 @@ std::vector<Airport> loadAirports(const std::string& filename) {
 }
 
 void printAirports(const std::vector<Airport>& airports) {
-    std::cout << "\n  Available airports\n";
+    std::cout << "\n";
+    printColor("\033[1;32m");
+    std::cout << "  Available airports\n";
+    resetColor();
+
     for (const Airport& airport : airports) {
         std::cout << "    ";
         airport.display();
@@ -144,24 +196,29 @@ void printAirports(const std::vector<Airport>& airports) {
 }
 
 void printFlights(const RouteOptimizer& optimizer) {
-    std::cout << "\n  Available flights\n"
-              << "  " << std::left << std::setw(10) << "Flight"
-              << std::setw(18) << "Route" << std::setw(13) << "Fare"
-              << std::setw(11) << "Duration" << "Status\n"
-              << "  " << std::string(66, '-') << '\n';
+    std::cout << "\n";
+    printColor("\033[1;32m");
+    std::cout << "  AVAILABLE FLIGHTS\n";
+    resetColor();
+
+    std::cout << "  " << std::left << std::setw(10) << "Flight"
+              << std::setw(18) << "Route"
+              << std::setw(13) << "Fare"
+              << std::setw(11) << "Duration"
+              << "Status\n";
+    printDivider();
+
     for (const Flight& flight : optimizer.getFlights()) {
         std::ostringstream duration;
         duration << std::fixed << std::setprecision(1)
                  << flight.getDuration() << 'h';
+
         std::cout << "  " << std::left << std::setw(10)
                   << flight.getFlightNumber()
-                  << std::setw(18) << (flight.getSourceCode() + " -> " +
-                                      flight.getDestinationCode())
-                  << "Rs. " << std::setw(9) << std::fixed
-                  << std::setprecision(2) << flight.getTicketPrice()
+                  << std::setw(18) << (flight.getSourceCode() + " -> " + flight.getDestinationCode())
+                  << "Rs. " << std::setw(9) << std::fixed << std::setprecision(2) << flight.getTicketPrice()
                   << std::setw(11) << duration.str()
-                  << (optimizer.isCancelled(flight.getFlightNumber())
-                          ? "CANCELLED" : "Available")
+                  << (optimizer.isCancelled(flight.getFlightNumber()) ? "CANCELLED" : "Available")
                   << '\n';
     }
     std::cout << '\n';
@@ -174,11 +231,15 @@ bool readLine(const std::string& prompt, std::string& value) {
 
 RoutePreference choosePreference() {
     while (true) {
-        std::cout << "\n  Optimize by\n"
-                  << "    1. Cheapest\n"
-                  << "    2. Fastest\n"
-                  << "    3. Fewest stops\n"
-                  << "    4. Balanced\n";
+        std::cout << "\n";
+        printColor("\033[1;33m");
+        std::cout << "  Optimize by\n";
+        std::cout << "    1. Cheapest\n";
+        std::cout << "    2. Fastest\n";
+        std::cout << "    3. Fewest stops\n";
+        std::cout << "    4. Balanced\n";
+        resetColor();
+
         std::string choice;
         if (!readLine("  Select preference [1-4]: ", choice)) {
             throw std::runtime_error("Input ended.");
@@ -188,12 +249,11 @@ RoutePreference choosePreference() {
         if (choice == "2") return RoutePreference::Fastest;
         if (choice == "3") return RoutePreference::FewestStops;
         if (choice == "4") return RoutePreference::Balanced;
-        std::cout << "  Please enter a number from 1 to 4.\n";
+        printError("Please enter a number from 1 to 4.");
     }
 }
 
-bool isKnownAirport(const std::vector<Airport>& airports,
-                    const std::string& code) {
+bool isKnownAirport(const std::vector<Airport>& airports, const std::string& code) {
     return std::any_of(airports.begin(), airports.end(),
         [&code](const Airport& airport) {
             return airport.getCode() == code;
@@ -201,10 +261,10 @@ bool isKnownAirport(const std::vector<Airport>& airports,
 }
 
 void simulateCancellation(RouteOptimizer& optimizer,
-                         const std::string& source,
-                         const std::string& destination,
-                         const RouteOptimizationStrategy& strategy,
-                         const Itinerary& originalItinerary) {
+                          const std::string& source,
+                          const std::string& destination,
+                          const RouteOptimizationStrategy& strategy,
+                          const Itinerary& originalItinerary) {
     std::string answer;
     if (!readLine("\n  Simulate a flight cancellation? [y/N]: ", answer) ||
         (uppercase(trim(answer)) != "Y" &&
@@ -217,10 +277,12 @@ void simulateCancellation(RouteOptimizer& optimizer,
         std::cout << ' ' << flight.getFlightNumber();
     }
     std::cout << '\n';
+
     std::string flightNumber;
     if (!readLine("  Flight number to cancel: ", flightNumber)) {
         return;
     }
+
     flightNumber = uppercase(trim(flightNumber));
     const bool belongsToItinerary = std::any_of(
         originalItinerary.getFlights().begin(),
@@ -228,49 +290,57 @@ void simulateCancellation(RouteOptimizer& optimizer,
         [&flightNumber](const Flight& flight) {
             return flight.getFlightNumber() == flightNumber;
         });
+
     if (!belongsToItinerary || !optimizer.cancelFlight(flightNumber)) {
-        std::cout << "  That flight could not be cancelled.\n";
+        printError("That flight could not be cancelled.");
         return;
     }
 
+    printInfo("Cancellation applied successfully.");
     std::cout << "  " << flightNumber
               << " is now marked as cancelled. Searching for an alternative...\n";
+
     Itinerary alternative;
     if (optimizer.findRoute(source, destination, strategy, alternative)) {
+        printSuccess("Alternative route found.");
         alternative.display(std::cout);
     } else {
-        std::cout << "  No alternative itinerary is available for "
-                  << source << " -> " << destination << ".\n";
+        printError("No alternative itinerary is available.");
     }
     std::cout << "  Cancellation remains active for this session.\n";
 }
 
-void searchItinerary(RouteOptimizer& optimizer,
-                     const std::vector<Airport>& airports) {
+void searchItinerary(RouteOptimizer& optimizer, const std::vector<Airport>& airports) {
     std::string source;
     std::string destination;
+
     if (!readLine("\n  Source airport code: ", source) ||
         !readLine("  Destination airport code: ", destination)) {
         return;
     }
+
     source = uppercase(trim(source));
     destination = uppercase(trim(destination));
-    if (!isKnownAirport(airports, source) ||
-        !isKnownAirport(airports, destination)) {
-        std::cout << "  Unknown airport code. Choose from the listed airports.\n";
+
+    if (!isKnownAirport(airports, source) || !isKnownAirport(airports, destination)) {
+        printError("Unknown airport code. Choose from the listed airports.");
         return;
     }
 
     const RoutePreference preference = choosePreference();
     const std::unique_ptr<RouteOptimizationStrategy> strategy =
         createRouteStrategy(preference);
+
     Itinerary itinerary;
     if (!optimizer.findRoute(source, destination, *strategy, itinerary)) {
-        std::cout << "\n  No route is available from " << source << " to "
-                  << destination << " for the current flight network.\n";
+        printError("No route is available from " + source + " to " + destination + ".");
         return;
     }
+
+    printColor("\033[1;35m");
     std::cout << "\n  Preference: " << strategy->name() << '\n';
+    resetColor();
+
     itinerary.display(std::cout);
     simulateCancellation(optimizer, source, destination, *strategy, itinerary);
 }
@@ -281,34 +351,34 @@ int main() {
     try {
         RouteOptimizer optimizer = loadFlights("data/flights.csv");
         const std::vector<Airport> airports = loadAirports("data/airports.csv");
+
         if (airports.empty()) {
             throw std::runtime_error("The airport data file contains no airports.");
         }
+
         for (const std::string& code : optimizer.getAirportCodes()) {
             if (!isKnownAirport(airports, code)) {
-                throw std::runtime_error("No airport information is available for " +
-                                         code + ".");
+                throw std::runtime_error("No airport information is available for " + code + ".");
             }
         }
 
+        printHeader("FLIGHTPATH PLANNER");
+
         while (true) {
-            std::cout << "\n========================================\n"
-                      << "          FLIGHTPATH PLANNER\n"
-                      << "========================================\n"
-                      << "  1. Find an itinerary\n"
-                      << "  2. View available flights\n"
-                      << "  3. View airports\n"
-                      << "  0. Exit\n";
+            printMenu();
             std::string choice;
             if (!readLine("  Choose an option: ", choice)) {
                 std::cout << "\n  Goodbye.\n";
                 break;
             }
+
             choice = trim(choice);
+
             if (choice == "0") {
-                std::cout << "  Thanks for using FlightPath. Safe travels!\n";
+                printSuccess("Thanks for using FlightPath. Safe travels!");
                 break;
             }
+
             if (choice == "1") {
                 searchItinerary(optimizer, airports);
             } else if (choice == "2") {
@@ -316,7 +386,7 @@ int main() {
             } else if (choice == "3") {
                 printAirports(airports);
             } else {
-                std::cout << "  Please choose 0, 1, 2, or 3.\n";
+                printError("Please choose 0, 1, 2, or 3.");
             }
         }
     } catch (const std::exception& error) {
