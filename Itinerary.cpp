@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -37,38 +36,53 @@ const std::vector<Flight>& Itinerary::getFlights() const {
 }
 
 void Itinerary::display(std::ostream& output) const {
-    output << "\n  Recommended route\n";
+    const std::string border = "  +----------------------------------------------------------+\n";
+    output << '\n' << border
+           << "  |                    ITINERARY SUMMARY                   |\n"
+           << border;
+
     if (flights.empty()) {
-        output << "  You are already at your destination.\n";
+        output << "  |  You are already at your destination.                   |\n"
+               << border;
         return;
     }
 
-    output << "  ";
+    std::string route = "  Route: ";
     for (std::size_t index = 0; index < flights.size(); ++index) {
         if (index != 0) {
-            output << " -> ";
+            route += " -> ";
         }
-        output << flights[index].getSourceCode();
+        route += flights[index].getSourceCode();
     }
-    output << " -> " << flights.back().getDestinationCode() << "\n\n";
+    route += " -> " + flights.back().getDestinationCode();
+    output << "  | " << std::left << std::setw(58) << route << "|\n"
+           << border
+           << "  | FLIGHT     FROM         TO           FARE          TIME   |\n"
+           << "  |----------------------------------------------------------|\n";
 
-    output << "  Flight details\n";
     for (const Flight& flight : flights) {
         const auto flightMinutes = static_cast<long long>(
             std::llround(flight.getDuration() * 60.0));
-        output << "    " << flight.getFlightNumber() << "  "
-               << flight.getSourceCode() << " -> "
-               << flight.getDestinationCode() << "  Rs. "
-               << std::fixed << std::setprecision(2) << flight.getTicketPrice()
-               << "  " << flightMinutes / 60 << "h " << flightMinutes % 60
-               << "m\n";
+        std::ostringstream row;
+        row << "  | " << std::left << std::setw(11) << flight.getFlightNumber()
+            << std::setw(13) << flight.getSourceCode()
+            << std::setw(13) << flight.getDestinationCode()
+            << "Rs." << std::right << std::setw(8) << std::fixed
+            << std::setprecision(2) << flight.getTicketPrice()
+            << "  " << std::setw(2) << flightMinutes / 60 << "h "
+            << std::setw(2) << flightMinutes % 60 << "m |\n";
+        output << row.str();
     }
 
     const auto totalMinutes = static_cast<long long>(
         std::llround(getTotalDuration() * 60.0));
-    output << "\n  Total cost     : Rs. " << std::fixed << std::setprecision(2)
-           << getTotalPrice()
-           << "\n  Total duration : " << totalMinutes / 60 << "h "
-           << totalMinutes % 60 << "m"
-           << "\n  Number of stops: " << getNumberOfStops() << '\n';
+    output << border
+           << "  | TOTAL FARE: Rs. " << std::fixed << std::setprecision(2)
+           << std::left << std::setw(12) << getTotalPrice()
+           << " DURATION: " << std::setw(7) << (std::to_string(totalMinutes / 60) + "h " +
+               std::to_string(totalMinutes % 60) + "m")
+           << "|\n"
+           << "  | NUMBER OF STOPS: " << std::left << std::setw(39)
+           << getNumberOfStops() << "|\n"
+           << border;
 }
