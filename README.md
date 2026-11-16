@@ -1,130 +1,181 @@
 # FlightPath – Flight Itinerary Planning & Optimization System
 
-## About the Project
+## 1. About the Project
 
-FlightPath is a C++17-based Flight Itinerary Planning and Optimization System. It helps users find suitable flight routes between two airports based on their preferences.
+FlightPath is a C++17-based Flight Itinerary Planning and Optimization System developed to help users find suitable flight routes between two airports.
 
-Users can enter their source and destination airport codes and choose how they want their journey to be planned. The system compares available routes and recommends an itinerary based on cost, travel time, number of stops, or a balanced combination of these factors.
+Users can enter their source and destination airport codes and select their preferred route based on ticket price, travel duration, number of stops, or a balanced combination of these factors.
 
-It also includes a flight cancellation simulation that allows the system to search for an alternative route when a selected flight becomes unavailable.
+The system uses graph-based route optimization to find suitable itineraries. It also includes a flight cancellation simulation that allows users to search for an alternative route when a selected flight becomes unavailable.
 
-## Objectives
+## 2. Objectives
 
 - To find suitable flight routes between two airports.
 - To compare itineraries based on ticket price, travel time, and number of stops.
-- To apply Object-Oriented Programming concepts in a practical project.
-- To understand graph-based algorithms and route optimization.
-- To implement design patterns for flexible route selection.
+- To implement Object-Oriented Programming concepts in a practical application.
+- To understand graph representation and route optimization.
+- To implement flexible route-selection strategies.
 - To handle flight cancellations and find alternative itineraries.
+- To organize project data using CSV files.
 
-## Key Features
+## 3. Key Features
 
 - **Flight Route Search:** Find available routes between source and destination airports.
-- **Cheapest Route:** Find an itinerary with the lowest total ticket cost.
-- **Fastest Route:** Find an itinerary with the shortest total travel time.
-- **Fewest Stops:** Select a route with fewer flight connections.
-- **Balanced Route:** Compare routes using cost, duration, and connection factors.
-- **Flight Cancellation:** Simulate the cancellation of a flight.
-- **Alternative Route Search:** Find another available itinerary after a cancellation.
-- **Itinerary Details:** Display flight information, total cost, duration, and stops.
-- **Input Validation:** Handle invalid flight details and user selections.
+- **Cheapest Route:** Find an itinerary with the lowest total ticket price.
+- **Fastest Route:** Find an itinerary with the shortest total travel duration.
+- **Fewest Stops:** Select an itinerary with the minimum number of flight connections.
+- **Balanced Route:** Consider ticket price and travel duration together.
+- **Flight Cancellation:** Simulate the cancellation of a selected flight.
+- **Alternative Route Search:** Find another available itinerary after cancellation.
+- **Airport Directory:** Display available airport information.
+- **Flight Directory:** Display available flights, fares, durations, and cancellation status.
+- **Input Validation:** Handle invalid airport codes, route preferences, and flight data.
 
-## Object-Oriented Programming Concepts
+## 4. Object-Oriented Programming Concepts
 
-The project uses the following OOP concepts:
+The project demonstrates the following OOP concepts:
 
-- **Encapsulation:** Keeps data private and provides access through public member functions.
+- **Encapsulation:** Keeps data members private and provides access through public member functions.
 - **Abstraction:** Provides common interfaces for route optimization.
-- **Inheritance:** Allows different route strategies to share a common base class.
-- **Polymorphism:** Selects different route optimization methods through a common interface.
-- **Composition:** An itinerary contains multiple flights.
-- **Association:** Flights connect source and destination airports.
+- **Inheritance:** Allows different route strategies to inherit from a common base class.
+- **Polymorphism:** Uses overridden functions to apply different route optimization methods.
+- **Composition:** An itinerary contains multiple flight objects.
+- **Association:** Flights represent connections between source and destination airports.
 
-## Design Patterns
+## 5. Design Patterns
 
-**1. Strategy Pattern**
+### Strategy Pattern
 
-The Strategy Pattern is used to implement different route optimization methods. Each strategy follows a common interface but uses a different approach to evaluate routes.
+The Strategy Pattern allows different route optimization methods to be implemented through a common interface. The system can select a strategy based on the user's route preference.
 
-**2. Factory Pattern**
+### Factory Pattern
 
-The Factory Pattern creates the appropriate route strategy based on the user's selection.
+The Factory Pattern creates the appropriate route strategy based on the user's selection. This avoids creating each strategy separately in the main application.
 
-These patterns make the route optimization system easier to extend and maintain.
-
-## Technologies Used
+## 6. Technologies Used
 
 - Programming Language: C++17
 - Compiler: GCC / MinGW g++
 - IDE: Visual Studio Code
 - Standard Library: C++ STL
 - Algorithm: Dijkstra's Algorithm
+- Data Storage: CSV files
 - Version Control: Git and GitHub
 
-## Project Structure
+## 7. Project Structure
 
-| File | Description |
+| File / Folder | Description |
 |---|---|
-| `Airport.h / Airport.cpp` | Airport details and related operations |
+| `Airport.h / Airport.cpp` | Stores airport details and related functions |
 | `AirportManager.h / AirportManager.cpp` | Manages airport records |
-| `Flight.h / Flight.cpp` | Flight information and validation |
-| `Passenger.h / Passenger.cpp` | Passenger details |
-| `Itinerary.h / Itinerary.cpp` | Stores and displays itinerary information |
-| `RouteStrategy.h / RouteStrategy.cpp` | Defines route optimization strategies |
-| `RouteOptimizer.h / RouteOptimizer.cpp` | Handles flight network and route searching |
-| `main.cpp` | Main application and user interaction |
+| `Flight.h / Flight.cpp` | Stores flight information and validates flight details |
+| `Passenger.h / Passenger.cpp` | Defines passenger information |
+| `Itinerary.h / Itinerary.cpp` | Stores and displays itinerary details and calculations |
+| `RouteStrategy.h / RouteStrategy.cpp` | Contains route strategy implementations |
+| `RouteOptimizer.h / RouteOptimizer.cpp` | Handles flight management, route searching, and optimization |
+| `main.cpp` | Main application, CSV loading, menu, and user interaction |
+| `AirportTest.cpp` | Airport-related testing |
+| `FlightTest.cpp` | Flight-related testing |
+| `RouteOptimizerTest.cpp` | Route optimization testing |
+| `data/airports.csv` | Stores airport records |
+| `data/flights.csv` | Stores flight records |
+| `.vscode/` | Visual Studio Code configuration |
+| `.gitignore` | Specifies files excluded from Git tracking |
 
-## How to Build and Run
+## 8. Data Files
 
-Make sure GCC or MinGW is installed and available in your terminal.
+FlightPath uses CSV files to store airport and flight information.
 
-Open the project folder in VS Code and run:
+### airports.csv
 
-**Compile:**
+Contains the following fields:
 
-```bash
+- `code`
+- `name`
+- `city`
+
+### flights.csv
+
+Contains the following fields:
+
+- `flightNumber`
+- `source`
+- `destination`
+- `price`
+- `duration`
+
+The application loads these files when it starts. It validates the records and uses the loaded information for airport display, flight display, and route optimization.
+
+Both CSV files must remain inside the `data` folder.
+
+## 9. How to Build and Run
+
+### Requirements
+
+- GCC / MinGW g++ compiler
+- Visual Studio Code
+- C++17 support
+
+Open the project folder in VS Code and open the integrated PowerShell terminal.
+
+Run the following two commands:
+
+**Step 1: Compile the project**
+
+```powershell
 g++ -std=c++17 main.cpp Airport.cpp AirportManager.cpp Flight.cpp Itinerary.cpp Passenger.cpp RouteOptimizer.cpp RouteStrategy.cpp -o FlightPath.exe
 ```
 
-**Run on Windows PowerShell:**
+**Step 2: Run the application**
 
 ```powershell
 .\FlightPath.exe
 ```
 
-## How the System Works
+Make sure the terminal is opened in the main project folder so the application can locate the CSV files inside the `data` folder.
 
-1. The user enters the source and destination airport codes.
-2. The user selects a route preference.
-3. The system checks the available flight network.
-4. The selected optimization strategy evaluates possible routes.
-5. The recommended itinerary is displayed with its details.
-6. The user can simulate a flight cancellation.
-7. If a flight is cancelled, the system searches for an alternative route.
+## 10. How the System Works
 
-## Sample Flight Network
+1. The application starts and loads airport and flight information from the CSV files.
+2. The system validates the loaded information.
+3. The main menu is displayed.
+4. The user can choose to find an itinerary, view available flights, view airports, or exit.
+5. When searching for an itinerary, the user enters the source and destination airport codes.
+6. The user selects a route preference: Cheapest, Fastest, Fewest Stops, or Balanced.
+7. The selected strategy evaluates available flights using the route optimization algorithm.
+8. The recommended itinerary is displayed with its flight details, total price, and duration.
+9. The user can optionally simulate a flight cancellation.
+10. If a flight is cancelled, the system searches for an alternative available route.
 
-The demonstration includes the following routes:
+## 11. Sample Flight Network
+
+The project includes sample airport and flight records for demonstration.
+
+Some example connections are:
 
 | Flight Number | Route | Ticket Price |
 |---|---|---:|
-| F101 | DEL → HYD | Rs. 4,000 |
-| F102 | HYD → MAA | Rs. 2,800 |
-| F201 | DEL → BOM | Rs. 3,000 |
-| F202 | BOM → MAA | Rs. 4,200 |
+| AI101 | DEL → HYD | Rs. 3,200 |
+| 6E201 | HYD → MAA | Rs. 2,800 |
+| UK101 | DEL → MAA | Rs. 7,500 |
+| 6E301 | DEL → BLR | Rs. 4,000 |
+| 6E302 | BLR → MAA | Rs. 2,200 |
 
-For example, a journey from Delhi (DEL) to Chennai (MAA) can be planned through Hyderabad (HYD) or Mumbai (BOM).
+For example, a journey from Delhi (DEL) to Chennai (MAA) can be planned through Hyderabad, Bengaluru, or other available connections.
 
-## Future Improvements
+## 12. Future Improvements
 
-- Load flight information from external files.
 - Add more airports and flight connections.
-- Include more advanced itinerary options.
+- Improve CSV parsing and data validation.
+- Include additional itinerary preferences.
 - Improve the user interface.
-- Add more comprehensive automated tests.
+- Expand automated testing.
+- Add more advanced flight management features.
 
-## Conclusion
+## 13. Conclusion
 
-FlightPath demonstrates how C++ and Object-Oriented Programming can be used to develop a practical flight itinerary planning system. It combines graph algorithms, design patterns, and route optimization to help users find suitable flight connections and handle changes caused by flight cancellations.
+FlightPath demonstrates how C++ and Object-Oriented Programming can be used to develop a practical flight itinerary planning and optimization system.
 
-The project also provides practical experience in software development, modular programming, testing, and collaborative work using Git and GitHub.
+It combines object-oriented design, graph algorithms, route-selection strategies, and CSV-based data loading to help users find suitable flight connections and handle changes caused by flight cancellations.
+
+The project also provides practical experience in modular programming, testing, and collaborative software development using Git and GitHub.
